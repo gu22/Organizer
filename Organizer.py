@@ -18,7 +18,7 @@ from shutil import *
 Data = datetime.datetime.now()
 print(Data)
 print ("Sistema de Organização de bases")
-print("v 1.0")
+print("v 1.01")
 
 
 #File = easygui.fileopenbox()
@@ -45,10 +45,10 @@ mes = 0
 
 
 # Definindo como realizar a verificação de arquivos
-botao = boolbox("Os arquivos já estão na pasta","Escolha")
+botao = easygui.msgbox("Os arquivos já estão na pasta","Escolha")
 
 # Loop de verificação de arquivos
-if botao == 0:
+if botao == 'OK':
     Path_name = easygui.diropenbox()
     print(Path_name)
 
@@ -60,16 +60,16 @@ if botao == 0:
         Files.append(os.path.join(Path_name,i))
 
     print(Files)
-else:
-    Path_file = os.listdir()
-    print(Path_file)
-    Path = os.getcwd()
+# else:
+#     Path_file = os.listdir()
+#     print(Path_file)
+#     Path = os.getcwd()
 
-    Files = []
-    for i in Path_file:
-        Files.append(os.path.join(Path, i))
+#     Files = []
+#     for i in Path_file:
+#         Files.append(os.path.join(Path, i))
 
-    print(Files)
+    # print(Files)
 
 
 nomediretorio = "BASE_Original"
@@ -87,6 +87,7 @@ c=0
 for g in Files:
     try:
         copyfile(g,(os.path.join(diretorio,Path_file[c])))
+        print(copyfile(g,(os.path.join(diretorio,Path_file[c]))))
         c +=1
     except PermissionError:
         print ("Pasta de destino já contém arquivos com o mesmo nome, por favor mover ou excluir a pasta")
@@ -99,10 +100,30 @@ for i in Files:
     extensao=[]
     extensao.append(os.path.splitext(i)[1])
     print(extensao)
-
+# fazer função que excluir outros tipos de arquivo <<<<<
 verificador = "nada"
 c = 0
-# Tratandos os dados
+
+#verificando arquivos para criar pastas
+centro = []
+
+for i in Files:
+
+    base = pd.read_excel(i)
+    centro_catch = str(base.iloc[2][1])
+    
+    if centro_catch in centro:
+        print(centro)
+        pass
+    else:
+        centro.append(centro_catch)
+        print(centro)
+        print("########")
+
+for i in centro:
+    os.mkdir(os.path.join(diretorio,str(i))
+
+# Capturandos  os dados para classificar os arquivos
 for i in Files:
 
     base = pd.read_excel(i)
@@ -122,7 +143,7 @@ for i in Files:
             print(mes)
         else:
             pass
-
+    # loop para identificar tipo das informações
     for y in tipos:
         if y in head:
             tipo = tipos[y]
@@ -132,11 +153,17 @@ for i in Files:
             break
         else:
             tipo = tipos[y]
-
+      
+    #definindo a transportadorra    
     transportadora = base.iloc[2][0]
-
+    
+    # Atribuindo nome original
     arquivo = Files[c]
+    
+    # Pegando extenção
     ext = extensao[0]
+    
+    #Renomeando arquivo
     os.rename(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
     print((Path_name+(tipo+" - "+transportadora+"_").upper()+(mes)+ext))
     print(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
