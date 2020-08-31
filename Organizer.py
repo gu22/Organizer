@@ -107,23 +107,24 @@ c = 0
 #verificando arquivos para criar pastas
 centro = []
 
-for i in Files:
+# for i in Files:
 
-    base = pd.read_excel(i)
-    centro_catch = str(base.iloc[2][1])
+#     base = pd.read_excel(i)
+#     centro_catch = str(base.iloc[2][1])
     
-    if centro_catch in centro:
-        print(centro)
-        pass
-    else:
-        centro.append(centro_catch)
-        print(centro)
-        print("########")
+#     if centro_catch in centro:
+#         print(centro)
+#         pass
+#     else:
+#         centro.append(centro_catch)
+#         print(centro)
+#         print("########")
 
 for i in centro:
     os.mkdir(os.path.join(diretorio,str(i))
 
 # Capturandos  os dados para classificar os arquivos
+
 for i in Files:
 
     base = pd.read_excel(i)
@@ -170,6 +171,8 @@ for i in Files:
 
 
     c+=1
+    
+    
 # c= 0
 # for i in Files:
 #
