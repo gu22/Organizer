@@ -14,6 +14,7 @@ from openpyxl import load_workbook
 import pandas as pd
 
 from shutil import *
+from shutil import copyfile
 
 Data = datetime.datetime.now()
 print(Data)
@@ -50,13 +51,13 @@ botao = easygui.msgbox("Os arquivos já estão na pasta","Escolha")
 # Loop de verificação de arquivos
 if botao == 'OK':
     Path_name = easygui.diropenbox()
-    print(Path_name)
+    print(Path_name) #Path_name = onde estao os arquivos
 
     Path_file = os.listdir(Path_name)
     print (Path_file)
 
     Files=[]
-    for i in Path_file:
+    for i in Path_file: #Path_file = arquivos que estão na pasta
         Files.append(os.path.join(Path_name,i))
 
     print(Files)
@@ -72,8 +73,9 @@ if botao == 'OK':
     # print(Files)
 
 
-nomediretorio = "BASE_Original"
+nomediretorio = ".BASE_Original"
 
+# criando diretorio com nome Base_Original
 diretorio = (os.path.join(Path_name,nomediretorio))
 
 try:
@@ -83,6 +85,8 @@ except OSError:
 else:
     print("Pasta: BASE_Original; criada com sucesso")
 
+
+# Criando copy dos arquivos originais para a pasta base_original
 c=0
 for g in Files:
     try:
@@ -107,21 +111,23 @@ c = 0
 #verificando arquivos para criar pastas
 centro = []
 
-# for i in Files:
+for i in Files:
 
-#     base = pd.read_excel(i)
-#     centro_catch = str(base.iloc[2][1])
+    base = pd.read_excel(i)
+    centro_catch = str(base.iloc[2][1])
     
-#     if centro_catch in centro:
-#         print(centro)
-#         pass
-#     else:
-#         centro.append(centro_catch)
-#         print(centro)
-#         print("########")
+    if centro_catch in centro:
+        print(centro)
+        print("Pass centro <<<>>>>")
+        pass
+    else:
+        centro.append(centro_catch)
+        print(centro)
+        print("########")
 
 for i in centro:
-    os.mkdir(os.path.join(diretorio,str(i))
+    os.mkdir(os.path.join(Path_name,str(i)))
+    
 
 # Capturandos  os dados para classificar os arquivos
 
@@ -144,6 +150,12 @@ for i in Files:
             print(mes)
         else:
             pass
+        
+        
+        
+        
+        
+        
     # loop para identificar tipo das informações
     for y in tipos:
         if y in head:
@@ -167,9 +179,50 @@ for i in Files:
     #Renomeando arquivo
     os.rename(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
     print((Path_name+(tipo+" - "+transportadora+"_").upper()+(mes)+ext))
+    print('<<<<<<<<<<<<<>>>>>>>>>>>>>')
     print(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
+    
+    arq_move = (os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper()+(mes)+ext)))
 
-
+    #Preparando para transferir arquivo para a pasta correta
+   # name_final = os.rename(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
+    
+    
+    
+    # Transferindo arquivo para a pasta correta (TESTE)
+    centro_catch = str(base.iloc[2][1])
+    
+    for i in centro:
+        pasta_centro = os.path.join(Path_name,str(i))
+        teste_pastacentro = os.path.exists(pasta_centro)
+        if teste_pastacentro is True:
+            print(pasta_centro,"<<<<<>>>>>/nTrue")
+            print("")
+            if centro_catch == i:
+                move(arq_move, pasta_centro)
+    
+            
+        else:
+            print("False")
+            print(pasta_centro)
+            
+    # centro_catch = str(base.iloc[2][1])
+    # if centro_catch == :
+    #     move((arq_move), pasta_centro)        
+            
+    
+    
+    # Realizando  e criando pasta/diretorio
+    pasta_mes = os.path.join(Path_name,mes)
+    teste_pasta = os.path.exists(pasta_mes)
+    if teste_pasta is True:
+        pass
+    else:
+        os.mkdir(pasta_mes)
+    
+    
+    
+    
     c+=1
     
     
