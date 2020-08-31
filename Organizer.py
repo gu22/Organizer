@@ -16,6 +16,8 @@ import pandas as pd
 from shutil import *
 from shutil import copyfile
 
+from datetime import date
+
 Data = datetime.datetime.now()
 print(Data)
 print ("Sistema de Organização de bases")
@@ -76,28 +78,40 @@ if botao == 'OK':
 nomediretorio = ".BASE_Original"
 
 # criando diretorio com nome Base_Original
-diretorio = (os.path.join(Path_name,nomediretorio))
+diretorio_baseoriginal = (os.path.join(Path_name,nomediretorio))
 
 try:
-    os.mkdir(diretorio)
+    os.mkdir(diretorio_baseoriginal)
 except OSError:
     print("Pasta já existe")
 else:
     print("Pasta: BASE_Original; criada com sucesso")
+    
+#criando diretorio de armazenamento de acordo com data 
+data_pasta = (str(Data.strftime("%y.%m.%d_%H.%M.%S")))
+data_pasta = (os.path.join(Path_name,data_pasta))   
+os.mkdir(data_pasta)
+print("PASTA DATA CRIADA")
+print("")
 
 
-# Criando copy dos arquivos originais para a pasta base_original
+# Criando copy dos arquivos originais para a pasta com data >>> base_original
 c=0
 for g in Files:
     try:
-        copyfile(g,(os.path.join(diretorio,Path_file[c])))
-        print(copyfile(g,(os.path.join(diretorio,Path_file[c]))))
+        copy(g, data_pasta)
+        # copyfile(g,os.path.join(data_pasta,Path_file[c]))
+        #copyfile(g,(os.path.join(diretorio,Path_file[c])))
+        # print(copyfile(g,os.path.join(data_pasta,Path_file[c])))
+        # print("")
+        # print(copyfile(g,(os.path.join(diretorio,Path_file[c]))))
         c +=1
     except PermissionError:
         print ("Pasta de destino já contém arquivos com o mesmo nome, por favor mover ou excluir a pasta")
 
+# movendo pasta
         
-
+move(data_pasta, diretorio_baseoriginal)
 
 
 for i in Files:
@@ -182,14 +196,16 @@ for i in Files:
     print('<<<<<<<<<<<<<>>>>>>>>>>>>>')
     print(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
     
-    arq_move = (os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper()+(mes)+ext)))
+   
 
     #Preparando para transferir arquivo para a pasta correta
    # name_final = os.rename(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
     
     
+    #definido arquivo que sera movido
+    arq_move = (os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper()+(mes)+ext)))
     
-    # Transferindo arquivo para a pasta correta (TESTE)
+    # Transferindo arquivo para a pasta correta (TESTE e transferencia)
     centro_catch = str(base.iloc[2][1])
     
     for i in centro:
@@ -200,8 +216,6 @@ for i in Files:
             print("")
             if centro_catch == i:
                 move(arq_move, pasta_centro)
-    
-            
         else:
             print("False")
             print(pasta_centro)
@@ -213,17 +227,21 @@ for i in Files:
     
     
     # Realizando  e criando pasta/diretorio
-    pasta_mes = os.path.join(Path_name,mes)
+    pasta_mes = os.path.join(Path_name,mes.upper())
     teste_pasta = os.path.exists(pasta_mes)
     if teste_pasta is True:
         pass
     else:
         os.mkdir(pasta_mes)
     
-    
-    
-    
+     
     c+=1
+
+#Movendo a pasta centro para o Mes centro
+move(pasta_centro,pasta_mes)
+    
+    
+   
     
     
 # c= 0
