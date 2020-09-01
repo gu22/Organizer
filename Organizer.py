@@ -123,25 +123,27 @@ verificador = "nada"
 c = 0
 
 #verificando arquivos para criar pastas
-centro = []
+#centro = []
 
-for i in Files:
+# for i in Files:
 
-    base = pd.read_excel(i)
-    centro_catch = str(base.iloc[2][1])
+#     base = pd.read_excel(i)
+#     centro_catch = str(base.iloc[2][1])
     
-    if centro_catch in centro:
-        print(centro)
-        print("Pass centro <<<>>>>")
-        pass
-    else:
-        centro.append(centro_catch)
-        print(centro)
-        print("########")
+#     if centro_catch in centro:
+#         print(centro)
+#         print("Pass centro <<<>>>>")
+#         pass
+#     else:
+#         centro.append(centro_catch)
+#         print(centro)
+#         print("########")
 
-for i in centro:
-    os.mkdir(os.path.join(Path_name,str(i)))
+# for i in centro:
+#     os.mkdir(os.path.join(Path_name,str(i)))
     
+##############################################################################
+#----------------------------------------------------------------------------#
 
 # Capturandos  os dados para classificar os arquivos
 
@@ -205,20 +207,54 @@ for i in Files:
     #definido arquivo que sera movido
     arq_move = (os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper()+(mes)+ext)))
     
-    # Transferindo arquivo para a pasta correta (TESTE e transferencia)
-    centro_catch = str(base.iloc[2][1])
     
-    for i in centro:
-        pasta_centro = os.path.join(Path_name,str(i))
-        teste_pastacentro = os.path.exists(pasta_centro)
-        if teste_pastacentro is True:
-            print(pasta_centro,"<<<<<>>>>>/nTrue")
+        
+    
+        
+    
+    # Transferindo arquivo para a pasta correta (TESTE e transferencia)
+    #centro_catch = str(base.iloc[2][1])
+    centro = str(base.iloc[2][1])
+    pasta_centro = os.path.join(Path_name,centro)
+    teste_pastacentro = os.path.exists(pasta_centro)
+    if teste_pastacentro is True:
+            print(pasta_centro,"<<<<<>>>>>")
             print("")
-            if centro_catch == i:
-                move(arq_move, pasta_centro)
-        else:
-            print("False")
-            print(pasta_centro)
+            # if centro_catch == i:
+            #     move(arq_move, pasta_centro)
+    else:
+          os.mkdir(pasta_centro)
+          
+    # Realizando  e criando pasta/diretorio mes
+    pasta_mes = os.path.join(pasta_centro,mes.upper())
+    teste_pasta = os.path.exists(pasta_mes)
+    if teste_pasta is True:
+        print ("Mes ja existe")
+        print ("---------------------")
+        print("")
+    else:
+        os.mkdir(pasta_mes)
+    
+    #Criando pasta Transportadora
+    #separando por transportadora
+    pasta_tsp = os.path.join(pasta_mes,str(transportadora))
+    teste_tsp = os.path.exists(pasta_tsp)
+    if teste_tsp is False:
+        os.mkdir(pasta_tsp)
+    
+    move(arq_move,pasta_tsp) 
+    #----------------------------------------------------------
+    # for i in centro:
+    #     pasta_centro = os.path.join(Path_name,str(i))
+    #     teste_pastacentro = os.path.exists(pasta_centro)
+    #     if teste_pastacentro is True:
+    #         print(pasta_centro,"<<<<<>>>>>/nTrue")
+    #         print("")
+    #         # if centro_catch == i:
+    #         #     move(arq_move, pasta_centro)
+    #     else:
+    #         print("False")
+    #         print(pasta_centro)
             
     # centro_catch = str(base.iloc[2][1])
     # if centro_catch == :
@@ -226,21 +262,18 @@ for i in Files:
             
     
     
-    # Realizando  e criando pasta/diretorio
-    pasta_mes = os.path.join(Path_name,mes.upper())
-    teste_pasta = os.path.exists(pasta_mes)
-    if teste_pasta is True:
-        pass
-    else:
-        os.mkdir(pasta_mes)
+    
+    
+    
     
      
     c+=1
 
 #Movendo a pasta centro para o Mes centro
-move(pasta_centro,pasta_mes)
+# move(pasta_centro,pasta_mes)
     
-    
+#----------------------------------------------------------------------------#
+##############################################################################    
    
     
     
