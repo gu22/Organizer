@@ -18,6 +18,9 @@ from shutil import copyfile
 
 from datetime import date
 
+
+#os.system('cmd /k Organizer.exe > log.txt')
+
 Data = datetime.datetime.now()
 print(Data)
 print ("Sistema de Organização de bases")
@@ -48,17 +51,20 @@ mes = 0
 
 
 # Definindo como realizar a verificação de arquivos
-botao = easygui.msgbox("Os arquivos já estão na pasta","Escolha")
+botao = easygui.msgbox("Os arquivos já estão na pasta?","Verificação de Arquivos")
 
 # Loop de verificação de arquivos
 if botao == 'OK':
     Path_name = easygui.diropenbox()
     print(Path_name) #Path_name = onde estao os arquivos
+    print("-------------------------")
+    print("")
 
     Path_file = os.listdir(Path_name)
     print (Path_file)
 
     Files=[]
+    ext_verific = [".xlsx",".xls"]
     for i in Path_file: #Path_file = arquivos que estão na pasta
         Files.append(os.path.join(Path_name,i))
 
@@ -79,13 +85,18 @@ nomediretorio = ".BASE_Original"
 
 # criando diretorio com nome Base_Original
 diretorio_baseoriginal = (os.path.join(Path_name,nomediretorio))
+teste_base = os.path.exists(diretorio_baseoriginal)
 
-try:
+if teste_base is False:
     os.mkdir(diretorio_baseoriginal)
-except OSError:
-    print("Pasta já existe")
-else:
-    print("Pasta: BASE_Original; criada com sucesso")
+    print(" Base Original - Criada com Sucesso")
+
+# try:
+#     os.mkdir(diretorio_baseoriginal)
+# except OSError:
+#     print("Pasta já existe")
+# else:
+#     print("Pasta: BASE_Original; criada com sucesso")
     
 #criando diretorio de armazenamento de acordo com data 
 data_pasta = (str(Data.strftime("%y.%m.%d_%H.%M.%S")))
@@ -113,9 +124,9 @@ for g in Files:
         
 move(data_pasta, diretorio_baseoriginal)
 
-
+extensao=[]
 for i in Files:
-    extensao=[]
+    
     extensao.append(os.path.splitext(i)[1])
     print(extensao)
 # fazer função que excluir outros tipos de arquivo <<<<<
@@ -148,127 +159,134 @@ c = 0
 # Capturandos  os dados para classificar os arquivos
 
 for i in Files:
-
-    base = pd.read_excel(i)
-
-    head =base.columns[0]
-    ncolunas = len(base.columns)
-
-    if ncolunas >= 5 :
-        verificador = base.iloc[1][4]
-
-
-
-    # loop para capturar o mes
-    for x in meses:
-        if meses[x] in head:
-            mes = meses[x]
-            print(mes)
-        else:
-            pass
-        
-        
-        
-        
-        
-        
-    # loop para identificar tipo das informações
-    for y in tipos:
-        if y in head:
-            tipo = tipos[y]
-            break
-        elif y in verificador:
-            tipo = tipos[y]
-            break
-        else:
-            tipo = tipos[y]
-      
-    #definindo a transportadorra    
-    transportadora = base.iloc[2][0]
     
-    # Atribuindo nome original
-    arquivo = Files[c]
+    ext_check = extensao[c]
     
-    # Pegando extenção
-    ext = extensao[0]
+    if ext_check in ext_verific:
     
-    #Renomeando arquivo
-    os.rename(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
-    print((Path_name+(tipo+" - "+transportadora+"_").upper()+(mes)+ext))
-    print('<<<<<<<<<<<<<>>>>>>>>>>>>>')
-    print(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
+        base = pd.read_excel(i)
     
-   
-
-    #Preparando para transferir arquivo para a pasta correta
-   # name_final = os.rename(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
+        head =base.columns[0]
+        ncolunas = len(base.columns)
+    
+        if ncolunas >= 5 :
+            verificador = base.iloc[1][4]
     
     
-    #definido arquivo que sera movido
-    arq_move = (os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper()+(mes)+ext)))
     
-    
-        
-    
-        
-    
-    # Transferindo arquivo para a pasta correta (TESTE e transferencia)
-    #centro_catch = str(base.iloc[2][1])
-    centro = str(base.iloc[2][1])
-    pasta_centro = os.path.join(Path_name,centro)
-    teste_pastacentro = os.path.exists(pasta_centro)
-    if teste_pastacentro is True:
-            print(pasta_centro,"<<<<<>>>>>")
-            print("")
-            # if centro_catch == i:
-            #     move(arq_move, pasta_centro)
-    else:
-          os.mkdir(pasta_centro)
+        # loop para capturar o mes
+        for x in meses:
+            if meses[x] in head:
+                mes = meses[x]
+                print(mes)
+            else:
+                pass
+            
+            
+            
+            
+            
+            
+        # loop para identificar tipo das informações
+        for y in tipos:
+            if y in head:
+                tipo = tipos[y]
+                break
+            elif y in verificador:
+                tipo = tipos[y]
+                break
+            else:
+                tipo = tipos[y]
           
-    # Realizando  e criando pasta/diretorio mes
-    pasta_mes = os.path.join(pasta_centro,mes.upper())
-    teste_pasta = os.path.exists(pasta_mes)
-    if teste_pasta is True:
-        print ("Mes ja existe")
-        print ("---------------------")
-        print("")
-    else:
-        os.mkdir(pasta_mes)
+        #definindo a transportadorra    
+        transportadora = base.iloc[2][0]
+        
+        # Atribuindo nome original
+        arquivo = Files[c]
+        
+        # Pegando extensão
+        ext = extensao[c]
+        
+        #Renomeando arquivo
+        os.rename(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
+        print((Path_name+(tipo+" - "+transportadora+"_").upper()+(mes)+ext))
+        print('<<<<<<<<<<<<<>>>>>>>>>>>>>')
+        print(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
+        
+       
     
-    #Criando pasta Transportadora
-    #separando por transportadora
-    pasta_tsp = os.path.join(pasta_mes,str(transportadora))
-    teste_tsp = os.path.exists(pasta_tsp)
-    if teste_tsp is False:
-        os.mkdir(pasta_tsp)
-    
-    move(arq_move,pasta_tsp) 
-    #----------------------------------------------------------
-    # for i in centro:
-    #     pasta_centro = os.path.join(Path_name,str(i))
-    #     teste_pastacentro = os.path.exists(pasta_centro)
-    #     if teste_pastacentro is True:
-    #         print(pasta_centro,"<<<<<>>>>>/nTrue")
-    #         print("")
-    #         # if centro_catch == i:
-    #         #     move(arq_move, pasta_centro)
-    #     else:
-    #         print("False")
-    #         print(pasta_centro)
+        #Preparando para transferir arquivo para a pasta correta
+       # name_final = os.rename(arquivo,(os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper())+(mes)+ext)))
+        
+        
+        #definido arquivo que sera movido
+        arq_move = (os.path.join(Path_name,((tipo+" - "+transportadora+"_").upper()+(mes)+ext)))
+        
+        
             
-    # centro_catch = str(base.iloc[2][1])
-    # if centro_catch == :
-    #     move((arq_move), pasta_centro)        
+        
             
-    
-    
-    
-    
-    
-    
-     
-    c+=1
+        
+        # Transferindo arquivo para a pasta correta (TESTE e transferencia)
+        #centro_catch = str(base.iloc[2][1])
+        centro = str(base.iloc[2][1])
+        pasta_centro = os.path.join(Path_name,centro)
+        teste_pastacentro = os.path.exists(pasta_centro)
+        if teste_pastacentro is True:
+                print(pasta_centro,"<<<<<>>>>>")
+                print("")
+                # if centro_catch == i:
+                #     move(arq_move, pasta_centro)
+        else:
+              os.mkdir(pasta_centro)
+              
+        # Realizando  e criando pasta/diretorio mes
+        pasta_mes = os.path.join(pasta_centro,mes.upper())
+        teste_pasta = os.path.exists(pasta_mes)
+        if teste_pasta is True:
+            print ("Mes ja existe")
+            print ("---------------------")
+            print("")
+        else:
+            os.mkdir(pasta_mes)
+        
+        #Criando pasta Transportadora
+        #separando por transportadora
+        pasta_tsp = os.path.join(pasta_mes,str(transportadora))
+        teste_tsp = os.path.exists(pasta_tsp)
+        if teste_tsp is False:
+            os.mkdir(pasta_tsp)
+        
+        move(arq_move,pasta_tsp) 
+        #----------------------------------------------------------
+        # for i in centro:
+        #     pasta_centro = os.path.join(Path_name,str(i))
+        #     teste_pastacentro = os.path.exists(pasta_centro)
+        #     if teste_pastacentro is True:
+        #         print(pasta_centro,"<<<<<>>>>>/nTrue")
+        #         print("")
+        #         # if centro_catch == i:
+        #         #     move(arq_move, pasta_centro)
+        #     else:
+        #         print("False")
+        #         print(pasta_centro)
+                
+        # centro_catch = str(base.iloc[2][1])
+        # if centro_catch == :
+        #     move((arq_move), pasta_centro)        
+                
+        
+        
+        
+        
+        
+        
+         
+        c+=1
 
+    else:
+        c+=1
+        
 #Movendo a pasta centro para o Mes centro
 # move(pasta_centro,pasta_mes)
     
