@@ -73,23 +73,50 @@ while True:
     else:        
         sys.exit()
         print("falha")
-
+        
+files_show = 1        
+while True:
 # Loop de verificação de arquivos
-
-Path_name = user_dir
-print(Path_name) #Path_name = onde estao os arquivos
-print("-------------------------")
-print("")
-
-Path_file = os.listdir(Path_name)
-print (Path_file)
-
-Files=[]
-ext_verific = [".xlsx",".xls"]
-for i in Path_file: #Path_file = arquivos que estão na pasta
-    Files.append(os.path.join(Path_name,i))
-
-print(Files)
+    
+    if files_show == 0:
+        break
+    elif files_show == 1 :    
+        Path_name = user_dir
+        print(Path_name) #Path_name = onde estao os arquivos
+        print("-------------------------")
+        print("")
+        
+        Path_file = os.listdir(Path_name)
+        print (Path_file)
+        
+        Files=[]
+        ext_verific = [".xlsx",".xls"]
+        for i in Path_file: #Path_file = arquivos que estão na pasta
+            Files.append(os.path.join(Path_name,i))
+        
+        print(Files)
+        
+        # extraindo extensao
+        extensao=[]
+        for i in Files:
+            
+            extensao.append(os.path.splitext(i)[1])
+            print(extensao)
+        print_file = "\n".join(Path_file)    
+        files_show = easygui.indexbox(("Os arquivos que serão renomeados, são:\n\n%s"%print_file),
+                                      "Arquivos Localizados",
+                                      choices=("Sim","Não","Cancelar"),
+                                   cancel_choice="Cancelar")
+        if files_show == 1:
+            easygui.msgbox("REMOVA OS ARQUIVOS QUE NÃO DEVEM SER RENOMEADOS","ALERTA")
+    else:
+        sys.exit()
+        print ('saindo')
+    
+    
+        
+    
+    
 # else:
 #     Path_file = os.listdir()
 #     print(Path_file)
@@ -145,11 +172,7 @@ for g in Files:
         
 move(data_pasta, diretorio_baseoriginal)
 
-extensao=[]
-for i in Files:
-    
-    extensao.append(os.path.splitext(i)[1])
-    print(extensao)
+
 # fazer função que excluir outros tipos de arquivo <<<<<
 verificador = "nada"
 c = 0
