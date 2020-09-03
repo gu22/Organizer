@@ -5,6 +5,7 @@ import datetime
 import easygui
 import os, glob
 import os.path
+import sys
 from os import *
 
 from easygui import *
@@ -51,24 +52,44 @@ mes = 0
 
 
 # Definindo como realizar a verificação de arquivos
-botao = easygui.msgbox("Os arquivos já estão na pasta?","Verificação de Arquivos")
+msg = easygui.msgbox("""Os arquivos já estão na pasta?\nGaranta que:\n
+                       - Criou um pasta (importante para nao comprometer
+                        outros arquivos);\n
+                       - Colocou os arquivos de base ""","Verificação de Arquivos")
+
+while True:
+    user_dir = easygui.diropenbox()
+    
+    choice = easygui.indexbox(("A pasta escolhida é:\n\n%s"%user_dir),
+                              "Diretorio escolhido",
+                               choices=("Sim","Não","Cancelar"),
+                               cancel_choice="Cancelar")
+    
+    
+    if choice == 0:
+        break
+    elif choice == 1:
+        pass
+    else:        
+        sys.exit()
+        print("falha")
 
 # Loop de verificação de arquivos
-if botao == 'OK':
-    Path_name = easygui.diropenbox()
-    print(Path_name) #Path_name = onde estao os arquivos
-    print("-------------------------")
-    print("")
 
-    Path_file = os.listdir(Path_name)
-    print (Path_file)
+Path_name = user_dir
+print(Path_name) #Path_name = onde estao os arquivos
+print("-------------------------")
+print("")
 
-    Files=[]
-    ext_verific = [".xlsx",".xls"]
-    for i in Path_file: #Path_file = arquivos que estão na pasta
-        Files.append(os.path.join(Path_name,i))
+Path_file = os.listdir(Path_name)
+print (Path_file)
 
-    print(Files)
+Files=[]
+ext_verific = [".xlsx",".xls"]
+for i in Path_file: #Path_file = arquivos que estão na pasta
+    Files.append(os.path.join(Path_name,i))
+
+print(Files)
 # else:
 #     Path_file = os.listdir()
 #     print(Path_file)
