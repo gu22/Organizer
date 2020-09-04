@@ -18,6 +18,8 @@ from shutil import *
 from shutil import copyfile
 
 from datetime import date
+#EMAIL
+import win32com.client
 
 
 #os.system('cmd /k Organizer.exe > log.txt')
@@ -216,6 +218,9 @@ c = 0
 ##############################################################################
 #----------------------------------------------------------------------------#
 
+lista_pastas=[]
+
+
 # Capturandos  os dados para classificar os arquivos
 
 for i in Files:
@@ -336,7 +341,8 @@ for i in Files:
         #     move((arq_move), pasta_centro)        
                 
         
-        
+        if not pasta_tsp in lista_pastas:
+            lista_pastas.append(pasta_tsp)
         
         
         
@@ -346,7 +352,51 @@ for i in Files:
 
     else:
         c+=1
+
         
+ #INICIANDO FUNÇÃO DE EMAIL    
+for item in lista_pastas:
+    
+    orientacao_dia = int(Data.strftime("%H"))
+    saudacao=["Bom dia, ","Boa Tarde, ","Boa noite, "]    
+    
+    if orientacao_dia <=11:
+        saudacao_email = saudacao[0]
+    elif orientacao_dia <=17:
+        saudacao_email = saudacao[1]
+    else:
+        saudacao_email = saudacao[2]
+    
+    
+       
+    outlook = win32com.client.Dispatch('Outlook.Application')
+    email = outlook.CreateItem(0)
+    # email = outlook.CreateItemFromTemplate(os.getcwd() + '\\cte.msg')
+    email.To= ''
+    email.BodyFormat= 2
+    email.Subject="Avalição dos Fornecedores - Base de Dados - %s"%mes
+    # email.Subject= email.Subject.replace('[compName]','test')
+    email.HTMLBody= (
+    """%s 
+        Espero que estejam bem!<p>
+        
+        Nossa reunião de avaliação está próxima!<br>
+        Estamos disponibilizando a base de dados referente ao mes de <b> %s  <b> para que vocês possam
+        analisar e nos informar o que ocorreu<p> 
+        Para qualquer tipo de dúvida,estamos à disposição"""%(saudacao_email,mes)
+        
+        
+        )
+    # email.HTMLBody= email.HTMLBody.replace('fname', 'test')
+    email.Attachments.Add(Source=str(os.getcwd() + '\\cte.email'))
+    email.Display(False)
+    email.SaveAs(os.getcwd() + '\\finish.msg', 3)
+
+
+
+
+
+    
 #Movendo a pasta centro para o Mes centro
 # move(pasta_centro,pasta_mes)
     

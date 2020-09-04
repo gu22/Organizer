@@ -17,12 +17,16 @@ import shutil
 from shutil import copyfile
 
 from datetime import date
+
+#EMAIL
+import win32com.client
+
 sys.setrecursionlimit(5000)
 
 Data = datetime.datetime.now()
 print(Data)
 print ("Sistema de Organização de bases")
-print("v 1.01")
+print("v 1.02")
 
 shutil.move
 
@@ -252,5 +256,59 @@ for i in Files:
 
     else:
         c+=1
+
+#FUNÇAO DE EMAIL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+for item in lista_pastas:
+    
+    orientacao_dia = int(Data.strftime("%H"))
+    saudacao=["Bom dia, ","Boa Tarde, ","Boa noite, "]    
+    
+    if orientacao_dia <=11:
+        saudacao_email = saudacao[0]
+    elif orientacao_dia <=17:
+        saudacao_email = saudacao[1]
+    else:
+        saudacao_email = saudacao[2]
+       
+       
+    email_path = os.listdir(item)
+    
+    for x in meses:
+        if meses[x] in item.lower():
+            mes = meses[x]
+            print(mes)
+        else:
+            pass
+    
+    mes = mes.capitalize()  
+    
+    trasp_email = os.path.dirname(item)
+    trasp_email = trasp_email[-1]
+    
+    
+    outlook = win32com.client.Dispatch('Outlook.Application')
+    email = outlook.CreateItem(0)
+    # email = outlook.CreateItemFromTemplate(os.getcwd() + '\\cte.msg')
+    email.To= ''
+    email.BodyFormat= 2
+    email.Subject="Avalição dos Fornecedores - Base de Dados - %s"%mes
+    # email.Subject= email.Subject.replace('[compName]','test')
+    email.HTMLBody= (
+    """%s 
+        Espero que estejam bem!<p>
         
+        Nossa reunião de avaliação está próxima!<br>
+        Estamos disponibilizando a base de dados referente ao mes de <b> %s  <b> para que vocês possam
+        analisar e nos informar o que ocorreu<p> 
+        Para qualquer tipo de dúvida,estamos à disposição"""%(saudacao_email,mes)
+        
+        
+        )
+    # email.HTMLBody= email.HTMLBody.replace('fname', 'test')
+    for x in email_path:
+        email.Attachments.Add(Source= os.path.join(item,x))
+    
+    email.Display(False)
+    email.SaveAs(item+ '\\EMAIL- %s_%s.msg'%(trasp_email,mes), 3)        
 #os.system("cd %s"%user_dir)
