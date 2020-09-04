@@ -293,16 +293,16 @@ for item in lista_pastas:
     # email = outlook.CreateItemFromTemplate(os.getcwd() + '\\cte.msg')
     email.To= ''
     email.BodyFormat= 2
-    email.Subject="Avalição dos Fornecedores - Base de Dados - %s"%mes
+    email.Subject="Avalição dos Fornecedores - Base de Dados (%s) - %s"%(trasp_email,mes)
     # email.Subject= email.Subject.replace('[compName]','test')
     email.HTMLBody= (
     """%s 
         espero que estejam bem!<p>
         
         Nossa reunião de avaliação está próxima!<br>
-        Estamos disponibilizando a base de dados referente ao mes de <b> %s  </b> para que vocês possam
+        Estamos disponibilizando a base de dados referente ao mês de <b> %s  </b> para que vocês possam
         analisar e nos informar o que ocorreu.<p> 
-        Para qualquer tipo de dúvida, estamos à disposição!"""%(saudacao_email,mes)
+        Para qualquer tipo de dúvida, estamos à disposição!<br>"""%(saudacao_email,mes)
         
         
         )
