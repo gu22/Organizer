@@ -283,9 +283,10 @@ for item in lista_pastas:
     
     mes = mes.capitalize()  
     
-    trasp_email = os.path.dirname(item)
+    trasp_email = os.path.split(item)
+    print(trasp_email)
     trasp_email = trasp_email[-1]
-    
+    print(trasp_email)
     
     outlook = win32com.client.Dispatch('Outlook.Application')
     email = outlook.CreateItem(0)
@@ -296,12 +297,12 @@ for item in lista_pastas:
     # email.Subject= email.Subject.replace('[compName]','test')
     email.HTMLBody= (
     """%s 
-        Espero que estejam bem!<p>
+        espero que estejam bem!<p>
         
         Nossa reunião de avaliação está próxima!<br>
-        Estamos disponibilizando a base de dados referente ao mes de <b> %s  <b> para que vocês possam
-        analisar e nos informar o que ocorreu<p> 
-        Para qualquer tipo de dúvida,estamos à disposição"""%(saudacao_email,mes)
+        Estamos disponibilizando a base de dados referente ao mes de <b> %s  </b> para que vocês possam
+        analisar e nos informar o que ocorreu.<p> 
+        Para qualquer tipo de dúvida, estamos à disposição!"""%(saudacao_email,mes)
         
         
         )
