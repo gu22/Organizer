@@ -102,13 +102,29 @@ while True:
             
             extensao.append(os.path.splitext(i)[1])
             print(extensao)
-        print_file = "\n".join(Path_file)    
+         
+        print_file = []
+        
+        for i in Files:
+            if ext_verific[0] in i:
+                print_file.append(i)
+            elif ext_verific[1] in i:
+                print_file.append(i)
+            else:
+                pass
+        
+            
+        print_file = "\n".join(print_file) 
+        
+        
+        
         files_show = easygui.indexbox(("Os arquivos que serão renomeados, são:\n\n%s"%print_file),
                                       "Arquivos Localizados",
                                       choices=("Sim","Não","Cancelar"),
                                    cancel_choice="Cancelar")
         if files_show == 1:
-            easygui.msgbox("REMOVA OS ARQUIVOS QUE NÃO DEVEM SER RENOMEADOS","ALERTA")
+            easygui.msgbox("""REMOVA OS ARQUIVOS QUE NÃO DEVEM SER RENOMEADOS\n
+                           Precione OK - Após retirar""","ALERTA")
     else:
         sys.exit()
         print ('saindo')
