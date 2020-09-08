@@ -45,10 +45,10 @@ mes = 0
 
 
 # Definindo como realizar a verificação de arquivos
-msg = easygui.msgbox("""Os arquivos já estão na pasta?\nGaranta que:\n
+msg = easygui.msgbox("""Os arquivos já estão na pasta?\nCertifique-se que:\n
                        - Criou um pasta (importante para nao comprometer
                         outros arquivos);\n
-                       - Colocou os arquivos de base ""","Verificação de Arquivos")
+                       - Colocou os arquivos de Avaliação ""","Verificação de Arquivos")
 
 while True:
     user_dir = easygui.diropenbox()
@@ -297,7 +297,7 @@ for item in lista_pastas:
     # email.Subject= email.Subject.replace('[compName]','test')
     email.HTMLBody= (
     """%s 
-        espero que estejam bem!<p>
+        esperamos que todos estejam bem!<p>
         
         Nossa reunião de avaliação está próxima!<br>
         Estamos disponibilizando a base de dados referente ao mês de <b> %s  </b> para que vocês possam
