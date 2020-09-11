@@ -26,7 +26,7 @@ sys.setrecursionlimit(5000)
 Data = datetime.datetime.now()
 print(Data)
 print ("Sistema de Organização de bases")
-print("v 1.02")
+print("v 1.04")
 
 shutil.move
 
@@ -163,6 +163,7 @@ c = 0
 
 # Capturandos  os dados para classificar os arquivos
 lista_pastas=[]
+arq_dup=[]
 for i in Files:
     
     ext_check = extensao[c]
@@ -245,19 +246,33 @@ for i in Files:
         if teste_tsp is False:
             os.mkdir(pasta_tsp)
         
-        shutil.move(arq_move,pasta_tsp) 
-     
+        arq_move_tst = arq_move
+        arq_move_tst = os.path.split(arq_move)
+        arq_move_tst = arq_move_tst[-1]
+        if not arq_move_tst in os.listdir(pasta_tsp):     
+            shutil.move(arq_move,pasta_tsp) 
+        else:
+            arq_dup.append(i)
+            print("Arquivo Duplicado\n",i,"\n",arq_move,"\n_______________________\n")
          
         if not pasta_tsp in lista_pastas:
             lista_pastas.append(pasta_tsp)
         
-    
+        
         c+=1
 
     else:
         c+=1
+if len(arq_dup) > 0:
+       
+    easygui.msgbox(("Arquivos duplicados:\n %s "%arq_dup),"Arquivos Duplicados")        
+        
 
 #FUNÇAO DE EMAIL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+qsend = easygui.ynbox(""" <<< ABRIR O OUTLOOK ANTES DE PROSSEGUIR OU OS EMAILS NÃO SERÃO CRIADOS >>> \nGostaria de enviar os emails agora?\n
+                          Sim - para abrir todos os email e inserir os contatos\n
+                          Não - para enviar mais tarde (todos emails ficarão salvos na pasta da transportadora)""","Enviar email",("Sim","Não"))
 
 for item in lista_pastas:
     
@@ -310,6 +325,13 @@ for item in lista_pastas:
     for x in email_path:
         email.Attachments.Add(Source= os.path.join(item,x))
     
-    email.Display(False)
+   
+    
+    
+    if qsend is True:
+        email.Display(False)
+    else:
+        easygui.msgbox("Os email estão na pasta de cada transportadora","Lembrete")
+    
     email.SaveAs(item+ '\\EMAIL- %s_%s.msg'%(trasp_email,mes), 3)        
 #os.system("cd %s"%user_dir)
