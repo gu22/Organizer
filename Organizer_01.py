@@ -274,6 +274,9 @@ qsend = easygui.ynbox(""" <<< ABRIR O OUTLOOK ANTES DE PROSSEGUIR OU OS EMAILS N
                           Sim - para abrir todos os email e inserir os contatos\n
                           Não - para enviar mais tarde (todos emails ficarão salvos na pasta da transportadora)""","Enviar email",("Sim","Não"))
 
+if qsend is False:
+    easygui.msgbox("Os emails estão na pasta de cada transportadora","Lembrete")
+
 for item in lista_pastas:
     
     orientacao_dia = int(Data.strftime("%H"))
@@ -330,8 +333,7 @@ for item in lista_pastas:
     
     if qsend is True:
         email.Display(False)
-    else:
-        easygui.msgbox("Os email estão na pasta de cada transportadora","Lembrete")
+    
     
     email.SaveAs(item+ '\\EMAIL- %s_%s.msg'%(trasp_email,mes), 3)        
 #os.system("cd %s"%user_dir)
