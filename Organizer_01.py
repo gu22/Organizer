@@ -79,7 +79,7 @@ while True:
         print("-------------------------")
         print("")
         
-        Path_file = os.listdir(Path_name)
+         
         print (Path_file)
         
         Files=[]
@@ -102,7 +102,7 @@ while True:
          
         print_file = []
         
-        for i in Files:
+        for i in files:
             if ext_verific[0] in i:
                 print_file.append(i)
             elif ext_verific[1] in i:

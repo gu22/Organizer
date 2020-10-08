@@ -6,7 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
- 
+
 import os.path
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -14,14 +14,26 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog, QDialog
 from PyQt5.QtGui import QIcon
 
+
 class Ui_Dialog(QDialog):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(521, 300)
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(9, 9, 9))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(9, 9, 9))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(9, 9, 9))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
+        Dialog.setPalette(palette)
         self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
-        self.buttonBox.setGeometry(QtCore.QRect(350, 250, 161, 32))
+        self.buttonBox.setGeometry(QtCore.QRect(430, 250, 81, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
         self.textBrowser = QtWidgets.QTextBrowser(Dialog)
         self.textBrowser.setGeometry(QtCore.QRect(30, 40, 471, 16))
@@ -39,11 +51,33 @@ class Ui_Dialog(QDialog):
         self.textBrowser_2.setObjectName("textBrowser_2")
         self.lcdNumber = QtWidgets.QLCDNumber(Dialog)
         self.lcdNumber.setGeometry(QtCore.QRect(440, 60, 64, 23))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(198, 198, 198))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Light, brush)
+        brush = QtGui.QBrush(QtGui.QColor(198, 198, 198))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Light, brush)
+        brush = QtGui.QBrush(QtGui.QColor(198, 198, 198))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Light, brush)
+        self.lcdNumber.setPalette(palette)
         self.lcdNumber.setDigitCount(5)
         self.lcdNumber.setObjectName("lcdNumber")
         self.progressBar = QtWidgets.QProgressBar(Dialog)
-        self.progressBar.setGeometry(QtCore.QRect(360, 220, 151, 23))
-        self.progressBar.setProperty("value", 24)
+        self.progressBar.setGeometry(QtCore.QRect(360, 223, 151, 20))
+        self.progressBar.setProperty("value", 0)
+        self.progressBar.setTextVisible(True)
+        self.progressBar.setInvertedAppearance(False)
         self.progressBar.setObjectName("progressBar")
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(360, 200, 47, 13))
@@ -52,21 +86,22 @@ class Ui_Dialog(QDialog):
         self.label_2.setGeometry(QtCore.QRect(450, 90, 51, 31))
         self.label_2.setWordWrap(True)
         self.label_2.setObjectName("label_2")
-        
-        
-        
 
         self.retranslateUi(Dialog)
         self.buttonBox.accepted.connect(Dialog.accept)
         self.buttonBox.rejected.connect(Dialog.reject)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
         
- #------------Funçoes e ações -------------------------------------------       
+
+#------------Funçoes e ações -------------------------------------------       
         self.pushButton.clicked.connect(self.abrir_arquivo)
        
         
     
 ##================================================================================
+
+
+
 
 #----------------- Definindo as ações ----------------------------      
     def abrir_arquivo(self):
@@ -82,13 +117,19 @@ class Ui_Dialog(QDialog):
         self.textBrowser_2.setText(arq)
         cont_file = len(path_file)
         self.lcdNumber.display(cont_file)
+        self.progressBar.setValue(50)
     
     def teste(self):
         print("Teste ok")
         
         
         
-##=================================================================================    
+##=================================================================================
+
+
+
+
+
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Organizador de arquivos v1.5"))
