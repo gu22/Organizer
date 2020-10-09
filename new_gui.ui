@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.0">
+  <object class="ttk.Frame" id="frame_2">
+    <property name="height">300</property>
+    <property name="relief">groove</property>
+    <property name="width">500</property>
+    <layout manager="pack">
+      <property name="propagate">True</property>
+      <property name="side">top</property>
+    </layout>
+    <child>
+      <object class="ttk.Notebook" id="notebook_2">
+        <property name="height">200</property>
+        <property name="width">300</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.02</property>
+          <property name="rely">0.23</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+        <child>
+          <object class="ttk.Notebook.Tab" id="tab_3">
+            <property name="padding">5</property>
+            <property name="text" translatable="yes">Arquivos Input</property>
+            <child>
+              <object class="tk.Text" id="text_10">
+                <property name="font">TkDefaultFont</property>
+                <property name="height">10</property>
+                <property name="relief">flat</property>
+                <property name="state">disabled</property>
+                <property name="width">50</property>
+                <layout manager="place">
+                  <property name="anchor">nw</property>
+                  <property name="bordermode">outside</property>
+                  <property name="height">10</property>
+                  <property name="width">10</property>
+                  <property name="x">0</property>
+                  <property name="y">0</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Notebook.Tab" id="tab_4">
+            <property name="padding">5</property>
+            <property name="state">disabled</property>
+            <property name="text" translatable="yes">Arquivos Output</property>
+            <child>
+              <object class="tk.Text" id="text_11">
+                <property name="blockcursor">false</property>
+                <property name="height">10</property>
+                <property name="relief">flat</property>
+                <property name="width">50</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="button_3">
+        <property name="text" translatable="yes">OK</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.82</property>
+          <property name="rely">0.88</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="button_4">
+        <property name="text" translatable="yes">Selecionar Pasta</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.02</property>
+          <property name="rely">0.02</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="button_5">
+        <property name="text" translatable="yes">Prosseguir</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.65</property>
+          <property name="rely">0.88</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Progressbar" id="progressbar_2">
+        <property name="cursor">starting</property>
+        <property name="maximum">100</property>
+        <property name="orient">horizontal</property>
+        <property name="takefocus">false</property>
+        <property name="value">0</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.65</property>
+          <property name="rely">0.8</property>
+          <property name="width">160</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Message" id="message_2">
+        <property name="justify">left</property>
+        <property name="relief">flat</property>
+        <property name="takefocus">false</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="height">100</property>
+          <property name="relx">0.65</property>
+          <property name="rely">0.31</property>
+          <property name="width">160</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Label" id="label_1">
+        <property name="text" translatable="yes">Processo</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.65</property>
+          <property name="rely">0.73</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Text" id="text_6">
+        <property name="height">1</property>
+        <property name="relief">flat</property>
+        <property name="state">disabled</property>
+        <property name="takefocus">false</property>
+        <property name="width">50</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.02</property>
+          <property name="rely">0.13</property>
+          <property name="width">300</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Text" id="text_7">
+        <property name="blockcursor">false</property>
+        <property name="font">TkDefaultFont</property>
+        <property name="height">1</property>
+        <property name="relief">flat</property>
+        <property name="setgrid">false</property>
+        <property name="state">disabled</property>
+        <property name="width">7</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.71</property>
+          <property name="rely">0.13</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Text" id="text_8">
+        <property name="height">1</property>
+        <property name="insertunfocussed">none</property>
+        <property name="relief">flat</property>
+        <property name="setgrid">true</property>
+        <property name="state">disabled</property>
+        <property name="width">5</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.87</property>
+          <property name="rely">.13</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Label" id="label_2">
+        <property name="font">TkDefaultFont</property>
+        <property name="justify">center</property>
+        <property name="text" translatable="yes">Arquivos
+Input</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.698</property>
+          <property name="rely">0.01</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Label" id="label_3">
+        <property name="cursor">arrow</property>
+        <property name="font">TkDefaultFont</property>
+        <property name="justify">center</property>
+        <property name="text" translatable="yes">Arquivos
+Output</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.86</property>
+          <property name="rely">0.01</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+  </object>
+</interface>
